@@ -1,3 +1,3 @@
 # ConnectFour
 
-# Created with Pygame
+Created with Pygame
