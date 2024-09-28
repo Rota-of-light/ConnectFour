@@ -28,14 +28,18 @@ class Curser(CircleShape):
 
         if self.player == "player_1":
             if keys[pygame.K_LEFT]:
-                self.move(-dt)
+                if self.position.x >= 0:
+                    self.move(-dt)
             if keys[pygame.K_RIGHT]:
-                self.move(dt)
+                if self.position.x <= SCREEN_WIDTH:
+                    self.move(dt)
         if self.player == "player_2":
             if keys[pygame.K_a]:
-                self.move(-dt)
+                if self.position.x >= 0:
+                    self.move(-dt)
             if keys[pygame.K_d]:
-                self.move(dt)
+                if self.position.x <= SCREEN_WIDTH:
+                    self.move(dt)
 
     
     def move(self, dt):
