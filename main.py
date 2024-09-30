@@ -2,6 +2,7 @@ import pygame
 from static_features import *
 from curser import Curser
 from line import Line
+from board import Board
 
 def main():
     pygame.init()
@@ -9,6 +10,7 @@ def main():
     drawable = pygame.sprite.Group()
     cursers = pygame.sprite.Group()
     lines = pygame.sprite.Group()
+    board = Board()
     Curser.containers = (updatable, cursers)
     Line.containers = (lines)
     starting_x = SCREEN_WIDTH / 2 - 35 - 70 * 3
@@ -32,7 +34,7 @@ def main():
     white = (255, 255, 255)
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT:    
                 return
         for item in updatable:
             item.update(dt)
@@ -43,6 +45,7 @@ def main():
             curser.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
+    
 
 if __name__ == "__main__":
     main()
