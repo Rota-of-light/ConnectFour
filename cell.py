@@ -4,6 +4,8 @@ from static_features import *
 class Cell():
     def __init__(self, across, down):
         self.state = None
+        self.column = across
+        self.row = down
         self.position_x = STARTING_X + (70 * across)
         self.position_y = STARTING_Y + (70 * down)
     

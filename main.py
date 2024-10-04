@@ -1,8 +1,11 @@
 import pygame
 from static_features import *
 from curser import Curser
+from curser2 import Curser2
 from line import Line
 from board import Board
+from piece import Piece
+import time
 
 def main():
     pygame.init()
@@ -12,7 +15,9 @@ def main():
     lines = pygame.sprite.Group()
     board = Board()
     Curser.containers = (updatable, cursers)
+    Curser2.containers = (updatable, cursers)
     Line.containers = (lines)
+    Piece.containers = (drawable)
     starting_x = SCREEN_WIDTH / 2 - 35 - 70 * 3
     starting_y = SCREEN_HEIGHT / 2 + 70 * 3
     for i in range(8):
@@ -28,13 +33,20 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
-    curser2 = Curser(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 20, "player_2")
-    curser1 = Curser(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 20, "player_1")
-    current_player = "player_1"
+    curser2 = Curser2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 20, "player_2", board)
+    curser1 = Curser(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 20, "player_1", board)
+    curser1.other = curser2
+    curser2.other = curser1
     white = (255, 255, 255)
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:    
+            if event.type == pygame.QUIT or board.victory == True or board.tie == True:  
+                if board.victory == True or board.tie == True:
+                    time.sleep(5)
+                    if board.tie == True:
+                        print("GAME OVER")
+                    return
+                print("GAME OVER")  
                 return
         for item in updatable:
             item.update(dt)
@@ -43,6 +55,8 @@ def main():
             line.draw(screen)
         for curser in cursers:
             curser.draw(screen)
+        for item in drawable:
+            item.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
     
